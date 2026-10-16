@@ -1,0 +1,45 @@
+===== System Information =====
+Date: Fri Oct 16 14:06:24 +07 2026
+Hostname: Daciajy-2.local
+OS: Darwin
+Architecture: arm64
+ProductName:		macOS
+ProductVersion:		15.3.1
+BuildVersion:		24D70
+
+CPU model:
+Apple M2
+Logical CPUs: 8
+Physical CPUs: 8
+Memory (bytes): 17179869184
+
+===== Compilers =====
+--- g++-16
+/opt/homebrew/bin/g++-16
+g++-16 (Homebrew GCC 16.2.0) 16.2.0
+Copyright (C) 2026 Free Software Foundation, Inc.
+--- g++
+/usr/bin/g++
+Apple clang version 17.0.0 (clang-1700.0.13.5)
+Target: arm64-apple-darwin24.3.0
+--- clang++
+/usr/bin/clang++
+Apple clang version 17.0.0 (clang-1700.0.13.5)
+Target: arm64-apple-darwin24.3.0
+--- mpicxx
+/opt/homebrew/bin/mpicxx
+Apple clang version 17.0.0 (clang-1700.0.13.5)
+Target: arm64-apple-darwin24.3.0
+--- mpirun
+/opt/homebrew/bin/mpirun
+mpirun (Open MPI) 5.0.11
+
+
+===== OpenMP Check =====
+OpenMP threads: 4
+
+===== Environment Variables =====
+CC=unset
+CXX=unset
+OMP_NUM_THREADS=unset
+OPENBLAS_NUM_THREADS=unset

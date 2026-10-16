@@ -1,0 +1,240 @@
+#include "common.h"
+
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
+#include <iostream>
+#include <stdexcept>
+
+// ------------------------------------------------------------
+// Naive matrix multiplication: i-j-k
+//
+// C[i,j] = sum_k A[i,k] * B[k,j]
+//
+// Simple reference kernel. Access to B is strided in the
+// innermost loop, so this is usually less cache-friendly.
+// ------------------------------------------------------------
+void matmul_ijk(
+    real_t* C,
+    const real_t* A,
+    const real_t* B,
+    std::size_t n
+) {
+    if (!C || !A || !B || n == 0) {
+        throw std::invalid_argument("matmul_ijk: invalid input");
+    }
+
+    std::fill(C, C + n * n, 0.0);
+
+    for (std::size_t i = 0; i < n; ++i) {
+        for (std::size_t j = 0; j < n; ++j) {
+            double sum = 0.0;
+
+            for (std::size_t k = 0; k < n; ++k) {
+                sum += A[i * n + k] * B[k * n + j];
+            }
+
+            C[i * n + j] = sum;
+        }
+    }
+}
+
+// ------------------------------------------------------------
+// Naive matrix multiplication: i-k-j
+//
+// C[i,j] += A[i,k] * B[k,j]
+//
+// The innermost loop accesses B and C contiguously in memory,
+// generally improving cache locality over the ijk kernel.
+// ------------------------------------------------------------
+void matmul_ikj(
+    real_t* C,
+    const real_t* A,
+    const real_t* B,
+    std::size_t n
+) {
+    if (!C || !A || !B || n == 0) {
+        throw std::invalid_argument("matmul_ikj: invalid input");
+    }
+
+    std::fill(C, C + n * n, 0.0);
+
+    for (std::size_t i = 0; i < n; ++i) {
+        for (std::size_t k = 0; k < n; ++k) {
+            const real_t aik = A[i * n + k];
+            const real_t* brow = B + k * n;
+            real_t* crow = C + i * n;
+
+            for (std::size_t j = 0; j < n; ++j) {
+                crow[j] += aik * brow[j];
+            }
+        }
+    }
+}
+
+// ------------------------------------------------------------
+// Row-block kernel for MPI.
+//
+// A and C point to local matrices containing nrows rows.
+// B points to the complete n x n matrix.
+// This function is implemented here so MPI code can reuse it.
+// ------------------------------------------------------------
+void matmul_ikj_rows(
+    real_t* C,
+    const real_t* A,
+    const real_t* B,
+    std::size_t nrows,
+    std::size_t n
+) {
+    if (n == 0 || !B ||
+        (nrows > 0 && (!A || !C))) {
+        throw std::invalid_argument(
+            "matmul_ikj_rows: invalid input"
+        );
+    }
+
+    std::fill(C, C + nrows * n, 0.0);
+
+    for (std::size_t i = 0; i < nrows; ++i) {
+        real_t* crow = C + i * n;
+
+        for (std::size_t k = 0; k < n; ++k) {
+            const real_t aik = A[i * n + k];
+            const real_t* brow = B + k * n;
+
+            for (std::size_t j = 0; j < n; ++j) {
+                crow[j] += aik * brow[j];
+            }
+        }
+    }
+}
+
+// ------------------------------------------------------------
+// Full reference verification helper.
+// ------------------------------------------------------------
+static bool full_reference_check(
+    const real_t* A,
+    const real_t* B,
+    const real_t* C,
+    std::size_t n,
+    double* rel_err
+) {
+    real_t* Cref = alloc_matrix(n);
+
+    try {
+        matmul_ijk(Cref, A, B, n);
+
+        const bool ok = verify_full(
+            C, Cref, n, 1e-10, rel_err
+        );
+
+        std::free(Cref);
+        return ok;
+    } catch (...) {
+        std::free(Cref);
+        throw;
+    }
+}
+
+int main(int argc, char** argv) {
+    real_t* A = nullptr;
+    real_t* B = nullptr;
+    real_t* C = nullptr;
+
+    try {
+        const Args args = parse_args(argc, argv);
+        const std::size_t n = args.n;
+
+        A = alloc_matrix(n);
+        B = alloc_matrix(n);
+        C = alloc_matrix(n);
+
+        // Deterministic inputs: B uses seed + 1.
+        gen_matrix(A, n, args.seed, 0, n);
+        gen_matrix(B, n, args.seed + 1, 0, n);
+
+        matmul_fn kernel =
+            (args.kernel == 1) ? matmul_ijk : matmul_ikj;
+
+        const char* kernel_name =
+            (args.kernel == 1) ? "naive_ijk" : "naive_ikj";
+
+        // Warmup runs are excluded from measured timings.
+        for (int w = 0; w < args.warmup; ++w) {
+            kernel(C, A, B, n);
+        }
+
+        bool all_verified = true;
+
+        for (int run = 1; run <= args.runs; ++run) {
+            const double t0 = now();
+            kernel(C, A, B, n);
+            const double elapsed = now() - t0;
+
+            bool verified = false;
+            double rel_err = 0.0;
+
+            if (args.verify) {
+                // Freivalds check for all supported dimensions.
+                verified = verify_freivalds(
+                    A, B, C, n, 1e-10, &rel_err
+                );
+
+                // Full O(n^3) oracle for smaller matrices.
+                if (n <= 1000) {
+                    double full_err = 0.0;
+
+                    const bool full_ok = full_reference_check(
+                        A, B, C, n, &full_err
+                    );
+
+                    rel_err = std::max(rel_err, full_err);
+                    verified = verified && full_ok;
+                }
+
+                all_verified = all_verified && verified;
+            }
+
+            RunInfo info;
+            info.algo = kernel_name;
+            info.model = "seq";
+            info.n = n;
+            info.P = 1;
+            info.T = 1;
+            info.run = run;
+            info.t_total = elapsed;
+            info.t_compute = elapsed;
+            info.t_comm = 0.0;
+            info.verified = verified;
+            info.rel_err = rel_err;
+            info.cutoff = args.cutoff;
+
+            print_csv(info);
+
+            if (args.verify && !verified) {
+                std::cerr
+                    << "Verification FAILED: n=" << n
+                    << ", run=" << run
+                    << ", rel_err=" << rel_err << '\n';
+            }
+        }
+
+        std::free(A);
+        std::free(B);
+        std::free(C);
+
+        if (args.verify && !all_verified) {
+            return 1;
+        }
+
+        return 0;
+    } catch (const std::exception& e) {
+        std::cerr << "naive_seq error: " << e.what() << '\n';
+
+        std::free(A);
+        std::free(B);
+        std::free(C);
+
+        return 2;
+    }
+}
