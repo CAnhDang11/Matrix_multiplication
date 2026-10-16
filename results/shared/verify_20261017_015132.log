@@ -1,0 +1,120 @@
+===== TV1 Verification =====
+Date: Sat Oct 17 01:51:32 +07 2026
+Root: /Users/dangchauanh/Documents/Hoc/pc
+Compiler: g++-16
+Flags: -std=c++17 -O3 -fopenmp
+
+
+===== Correctness Tests =====
+
+TEST: bin/naive_mpi -n 1 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,1,1,1,1,0,0,0,true,0,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=1 t=1
+
+TEST: bin/naive_mpi -n 1 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,1,1,1,1,0,0,0,true,0,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=1 t=2
+
+TEST: bin/naive_mpi -n 1 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,1,1,1,1,0,0,0,true,0,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=1 t=4
+
+TEST: bin/naive_mpi -n 2 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,2,1,1,1,0,0,0,true,1.443374472e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=2 t=1
+
+TEST: bin/naive_mpi -n 2 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,2,1,1,1,0,0,0,true,1.443374472e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=2 t=2
+
+TEST: bin/naive_mpi -n 2 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,2,1,1,1,0,0,0,true,1.443374472e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=2 t=4
+
+TEST: bin/naive_mpi -n 3 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,3,1,1,1,0,0,0,true,1.100233513e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=3 t=1
+
+TEST: bin/naive_mpi -n 3 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,3,1,1,1,0,0,0,true,1.100233513e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=3 t=2
+
+TEST: bin/naive_mpi -n 3 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,3,1,1,1,0,0,0,true,1.100233513e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=3 t=4
+
+TEST: bin/naive_mpi -n 7 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,7,1,1,1,0,0,0,true,1.67120202e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=7 t=1
+
+TEST: bin/naive_mpi -n 7 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,7,1,1,1,1e-06,1e-06,0,true,1.67120202e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=7 t=2
+
+TEST: bin/naive_mpi -n 7 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,7,1,1,1,0,0,0,true,1.67120202e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=7 t=4
+
+TEST: bin/naive_mpi -n 16 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,16,1,1,1,1e-06,1e-06,0,true,1.80494894e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=16 t=1
+
+TEST: bin/naive_mpi -n 16 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,16,1,1,1,1e-06,1e-06,0,true,1.80494894e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=16 t=2
+
+TEST: bin/naive_mpi -n 16 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,16,1,1,1,1e-06,1e-06,0,true,1.80494894e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=16 t=4
+
+TEST: bin/naive_mpi -n 100 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,100,1,1,1,0.000174,0.00017,4e-06,true,3.902056815e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=100 t=1
+
+TEST: bin/naive_mpi -n 100 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,100,1,1,1,0.00018,0.000177,2e-06,true,3.902056815e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=100 t=2
+
+TEST: bin/naive_mpi -n 100 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,100,1,1,1,0.000172,0.000169,3e-06,true,3.902056815e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=100 t=4
+
+TEST: bin/naive_mpi -n 257 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,257,1,1,1,0.003332,0.003313,1.9e-05,true,5.181865346e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=257 t=1
+
+TEST: bin/naive_mpi -n 257 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,257,1,1,1,0.003306,0.003284,2.1e-05,true,5.181865346e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=257 t=2
+
+TEST: bin/naive_mpi -n 257 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,mpi,257,1,1,1,0.003567,0.003512,5.5e-05,true,5.181865346e-16,0,Daciajy-2.local,unknown
+PASS: bin/naive_mpi n=257 t=4
+
+===== Summary =====
+Passed:  21
+Failed:  0
+Skipped: 0
+Log: results/shared/verify_20261017_015132.log
+Verification completed.

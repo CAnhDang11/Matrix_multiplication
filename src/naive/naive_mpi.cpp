@@ -47,6 +47,34 @@ void matmul_reference(
 
 } // namespace
 
+// Nhân ma trận cục bộ theo dải hàng cho MPI.
+void matmul_ikj_rows(
+    real_t* C,
+    const real_t* A,
+    const real_t* B,
+    std::size_t nrows,
+    std::size_t n
+) {
+    if (n == 0 || !B || (nrows > 0 && (!A || !C))) {
+        throw std::invalid_argument("matmul_ikj_rows: invalid input");
+    }
+
+    std::fill(C, C + nrows * n, 0.0);
+
+    for (std::size_t i = 0; i < nrows; ++i) {
+        real_t* crow = C + i * n;
+
+        for (std::size_t k = 0; k < n; ++k) {
+            const real_t aik = A[i * n + k];
+            const real_t* brow = B + k * n;
+
+            for (std::size_t j = 0; j < n; ++j) {
+                crow[j] += aik * brow[j];
+            }
+        }
+    }
+}
+
 int main(int argc, char** argv) {
     int provided = 0;
 

@@ -212,3 +212,7 @@ Lưu kết quả phân tích vào thư mục `reports/`:
 3. **Nhận xét & Kết luận**:
    * Ảnh hưởng của kiến trúc bộ nhớ (Hierarchical Cache vs Distributed Memory).
    * Trade-off giữa chi phí truyền thông mạng và tốc độ tính toán song song.
+
+
+
+
