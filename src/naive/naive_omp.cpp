@@ -77,6 +77,25 @@ static void matmul_ikj_omp(
 // ------------------------------------------------------------
 // Full reference verification using the sequential ijk kernel.
 // ------------------------------------------------------------
+static void matmul_reference(
+    real_t* C,
+    const real_t* A,
+    const real_t* B,
+    std::size_t n
+) {
+    std::fill(C, C + n * n, 0.0);
+
+    for (std::size_t i = 0; i < n; ++i) {
+        for (std::size_t j = 0; j < n; ++j) {
+            double sum = 0.0;
+            for (std::size_t k = 0; k < n; ++k) {
+                sum += A[i * n + k] * B[k * n + j];
+            }
+            C[i * n + j] = sum;
+        }
+    }
+}
+
 static bool full_reference_check(
     const real_t* A,
     const real_t* B,
@@ -87,7 +106,7 @@ static bool full_reference_check(
     real_t* Cref = alloc_matrix(n);
 
     try {
-        matmul_ijk(Cref, A, B, n);
+        matmul_reference(Cref, A, B, n);
         const bool ok = verify_full(C, Cref, n, 1e-10, rel_err);
         std::free(Cref);
         return ok;

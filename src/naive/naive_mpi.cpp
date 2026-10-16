@@ -11,9 +11,8 @@
 #include <vector>
 
 namespace {
-
-// Cấp phát bộ nhớ căn chỉnh 64 byte cho ma trận cục bộ.
-// count là số phần tử double cần cấp phát.
+// Allocates a matrix with 64-byte alignment.
+// Returns nullptr if allocation fails.
 real_t* alloc_aligned(std::size_t count) {
     if (count == 0) {
         count = 1;

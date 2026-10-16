@@ -86,8 +86,7 @@ void matmul_ikj_rows(
     std::size_t nrows,
     std::size_t n
 ) {
-    if (n == 0 || !B ||
-        (nrows > 0 && (!A || !C))) {
+    if (n == 0 || !B || (nrows > 0 && (!A || !C))) {
         throw std::invalid_argument(
             "matmul_ikj_rows: invalid input"
         );
@@ -118,7 +117,7 @@ static bool full_reference_check(
     const real_t* C,
     std::size_t n,
     double* rel_err
-) {
+){
     real_t* Cref = alloc_matrix(n);
 
     try {

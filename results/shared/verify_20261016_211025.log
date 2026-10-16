@@ -1,0 +1,120 @@
+===== TV1 Verification =====
+Date: Fri Oct 16 21:10:25 +07 2026
+Root: /Users/dangchauanh/Documents/Hoc/pc
+Compiler: g++-16
+Flags: -std=c++17 -O3 -fopenmp
+
+
+===== Correctness Tests =====
+
+TEST: bin/naive_omp -n 1 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,1,1,1,1,0,0,0,true,0,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=1 t=1
+
+TEST: bin/naive_omp -n 1 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,1,1,2,1,9.000301361e-06,9.000301361e-06,0,true,0,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=1 t=2
+
+TEST: bin/naive_omp -n 1 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,1,1,4,1,1.800060272e-05,1.800060272e-05,0,true,0,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=1 t=4
+
+TEST: bin/naive_omp -n 2 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,2,1,1,1,0,0,0,true,1.443374472e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=2 t=1
+
+TEST: bin/naive_omp -n 2 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,2,1,2,1,1.499988139e-05,1.499988139e-05,0,true,1.443374472e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=2 t=2
+
+TEST: bin/naive_omp -n 2 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,2,1,4,1,1.600012183e-05,1.600012183e-05,0,true,1.443374472e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=2 t=4
+
+TEST: bin/naive_omp -n 3 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,3,1,1,1,0,0,0,true,1.100233513e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=3 t=1
+
+TEST: bin/naive_omp -n 3 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,3,1,2,1,9.000301361e-06,9.000301361e-06,0,true,1.100233513e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=3 t=2
+
+TEST: bin/naive_omp -n 3 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,3,1,4,1,1.800060272e-05,1.800060272e-05,0,true,1.100233513e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=3 t=4
+
+TEST: bin/naive_omp -n 7 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,7,1,1,1,0,0,0,true,1.67120202e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=7 t=1
+
+TEST: bin/naive_omp -n 7 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,7,1,2,1,1.100078225e-05,1.100078225e-05,0,true,1.67120202e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=7 t=2
+
+TEST: bin/naive_omp -n 7 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,7,1,4,1,1.600012183e-05,1.600012183e-05,0,true,1.67120202e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=7 t=4
+
+TEST: bin/naive_omp -n 16 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,16,1,1,1,1.998618245e-06,1.998618245e-06,0,true,1.80494894e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=16 t=1
+
+TEST: bin/naive_omp -n 16 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,16,1,2,1,9.000301361e-06,9.000301361e-06,0,true,1.80494894e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=16 t=2
+
+TEST: bin/naive_omp -n 16 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,16,1,4,1,1.999922097e-05,1.999922097e-05,0,true,1.80494894e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=16 t=4
+
+TEST: bin/naive_omp -n 100 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,100,1,1,1,0.0001550000161,0.0001550000161,0,true,3.902056815e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=100 t=1
+
+TEST: bin/naive_omp -n 100 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,100,1,2,1,0.000102000311,0.000102000311,0,true,3.902056815e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=100 t=2
+
+TEST: bin/naive_omp -n 100 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,100,1,4,1,7.000006735e-05,7.000006735e-05,0,true,3.902056815e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=100 t=4
+
+TEST: bin/naive_omp -n 257 -t 1
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,257,1,1,1,0.006023000926,0.006023000926,0,true,5.181865346e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=257 t=1
+
+TEST: bin/naive_omp -n 257 -t 2
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,257,1,2,1,0.002042001113,0.002042001113,0,true,5.181865346e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=257 t=2
+
+TEST: bin/naive_omp -n 257 -t 4
+algo,model,n,P,T,run,t_total,t_compute,t_comm,verified,rel_err,cutoff,host,commit
+naive_ikj,omp,257,1,4,1,0.00106699951,0.00106699951,0,true,5.181865346e-16,128,Daciajy-2.local,unknown
+PASS: bin/naive_omp n=257 t=4
+
+===== Summary =====
+Passed:  21
+Failed:  0
+Skipped: 0
+Log: results/shared/verify_20261016_211025.log
+Verification completed.
