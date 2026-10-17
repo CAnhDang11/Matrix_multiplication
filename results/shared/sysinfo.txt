@@ -1,6 +1,5 @@
 ===== System Information =====
 Date: Fri Oct 16 14:06:24 +07 2026
-Hostname: Daciajy-2.local
 OS: Darwin
 Architecture: arm64
 ProductName:		macOS
