@@ -67,6 +67,36 @@ if [[ "${BUILD:-1}" == "1" ]]; then
         echo "Skipping naive_omp build: expected source files not found."
         SKIPPED=$((SKIPPED + 1))
     fi
+
+    if [[ -f src/common/common.cpp &&
+          -f src/strassen/strassen.cpp &&
+          -f src/strassen/strassen_seq.cpp ]]; then
+        if $CXX $CXXFLAGS -Iinclude \
+            src/common/common.cpp \
+            src/strassen/strassen.cpp \
+            src/strassen/strassen_seq.cpp \
+            -o bin/strassen_seq; then
+            echo "Built bin/strassen_seq"
+        else
+            echo "BUILD FAILED: strassen_seq"
+            FAILED=$((FAILED + 1))
+        fi
+    fi
+
+    if [[ -f src/common/common.cpp &&
+          -f src/strassen/strassen.cpp &&
+          -f src/strassen/strassen_omp.cpp ]]; then
+        if $CXX $CXXFLAGS -Iinclude \
+            src/common/common.cpp \
+            src/strassen/strassen.cpp \
+            src/strassen/strassen_omp.cpp \
+            -o bin/strassen_omp; then
+            echo "Built bin/strassen_omp"
+        else
+            echo "BUILD FAILED: strassen_omp"
+            FAILED=$((FAILED + 1))
+        fi
+    fi
 fi
 
 echo
@@ -74,7 +104,7 @@ echo "===== Correctness Tests ====="
 
 # Each binary must accept: -n N -t T -r 1 --verify.
 # Additional binaries can be supplied through VERIFY_BINS.
-BINS=(bin/naive_seq bin/naive_omp)
+BINS=(bin/naive_seq bin/naive_omp bin/strassen_seq bin/strassen_omp)
 if [[ -n "${VERIFY_BINS:-}" ]]; then
     read -r -a BINS <<< "$VERIFY_BINS"
 fi
