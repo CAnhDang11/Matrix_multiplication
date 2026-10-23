@@ -242,10 +242,10 @@ void strassen_even(
     // C21 = M2 + M4
     add_mat(A21.get(), M2.get(), M4.get(), m);
 
-    // C22 = M1 - M2 + M3 + M7
+    // C22 = M1 - M2 + M3 + M6
     sub_mat(T1.get(), M1.get(), M2.get(), m);
     add_mat(T2.get(), T1.get(), M3.get(), m);
-    add_mat(A22.get(), T2.get(), M7.get(), m);
+    add_mat(A22.get(), T2.get(), M6.get(), m);   
 
     join_quadrants(C, A11.get(), A12.get(), A21.get(), A22.get(), n);
 }

@@ -27,12 +27,12 @@ if [[ ! -x bin/strassen_seq || ! -x bin/strassen_omp ]]; then
 fi
 
 # Odd and non-power-of-two sizes must pad correctly.
-for n in 1 2 3 7 16 100 257; do
+for n in 1 2 3 7 16 100 257 1000; do
     run_test "strassen_seq_n${n}" \
         ./bin/strassen_seq -n "$n" -r 1 --cutoff 32 --verify
 done
 
-for n in 1 2 3 7 16 100 257; do
+for n in 1 2 3 7 16 100 257 1000; do
     for t in 1 2 4; do
         run_test "strassen_omp_n${n}_t${t}" \
             ./bin/strassen_omp -n "$n" -t "$t" -r 1 \
