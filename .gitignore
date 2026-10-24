@@ -1,6 +1,6 @@
-bin/
 *.exe
+*:Zone.Identifier
+bin/
 results/*/*.tmp
-bin/
-*.exe
 results/sample/
+results/shared/logs/
