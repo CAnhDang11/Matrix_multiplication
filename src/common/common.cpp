@@ -14,7 +14,9 @@
 
 #include <omp.h>
 #include <new>
+#if !defined(_WIN32)
 #include <unistd.h>
+#endif
 
 // ------------------------------------------------------------
 // Internal utilities
@@ -163,12 +165,21 @@ real_t* alloc_matrix(std::size_t n) {
 
     void* ptr = nullptr;
 
+#if defined(_WIN32)
+    // MinGW/MSYS2 does not provide posix_memalign. Plain malloc
+    // remains compatible with std::free used throughout the project.
+    ptr = std::malloc(bytes);
+    if (ptr == nullptr) {
+        throw std::bad_alloc();
+    }
+#else
     // POSIX allocation is available on macOS and Linux.
     const int rc = posix_memalign(&ptr, ALIGNMENT, bytes);
 
     if (rc != 0 || ptr == nullptr) {
         throw std::bad_alloc();
     }
+#endif
 
     return static_cast<real_t*>(ptr);
 }
@@ -499,9 +510,13 @@ void print_csv(const RunInfo& r) {
 
     char hostname[256] = "unknown";
 
+#if defined(_WIN32)
+    std::strcpy(hostname, "windows");
+#else
     if (gethostname(hostname, sizeof(hostname) - 1) != 0) {
         std::strcpy(hostname, "unknown");
     }
+#endif
 
     const char* commit = std::getenv("GIT_COMMIT");
 
