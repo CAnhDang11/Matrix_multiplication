@@ -8,6 +8,9 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --time=00:10:00
 
+# Di chuyen vao dung thu muc chua ma nguon
+cd $HOME/Matrix_multiplication || exit 1
+
 module load openmpi/5.0
 
 echo "=== 1. CHAY THU STRASSEN MPI ==="
