@@ -1,0 +1,17 @@
+===== System Information =====
+Host: Laptop-3 (Intel Core Client Node)
+Date: Mon Nov 09 19:22:00 +07 2026
+OS: Windows 11 Pro 64-bit (Build 10.0.26100)
+Architecture: x86_64 / AMD64
+CPU Model: Intel Core (Intel64 Family 6 Model 151 Stepping 2, GenuineIntel)
+Physical Cores: 12 Cores
+Logical CPUs: 12 Threads
+Memory (RAM): ~16.0 GiB (17,179,869,184 bytes)
+Storage: NVMe PCIe SSD
+
+===== Compilers & Environment =====
+C/C++ Compiler: MinGW-w64 GCC 13+ / MSYS2 (x86_64-w64-mingw32)
+OpenMP Support: OpenMP 4.5 / 5.0
+Python: Python 3.13.7
+Role: Shared-Memory Baseline Benchmark Node (Laptop 3)
+
