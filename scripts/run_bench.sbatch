@@ -17,6 +17,16 @@ mkdir -p bin results/cluster/logs
 chmod +x scripts/*.sh tests/*.sh 2>/dev/null || true
 sed -i 's/\r$//' scripts/*.sh tests/*.sh 2>/dev/null || true
 
+# 1. Bien dich tuong thich 100% voi kien truc CPU cua node duoc cap phat
+echo "=== BIEN DICH TREN $(hostname) ==="
+mpicxx -std=c++17 -O3 -fopenmp -Iinclude \
+  src/common/common.cpp src/strassen/strassen.cpp \
+  src/strassen/strassen_mpi.cpp -o bin/strassen_mpi
+
+mpicxx -std=c++17 -O3 -fopenmp -Iinclude \
+  src/common/common.cpp src/strassen/strassen.cpp \
+  src/strassen/strassen_hybrid.cpp -o bin/strassen_hybrid
+
 echo "=========================================================="
 echo "BAT DAU BENCHMARK STRASSEN CLUSTER (TV3 · D7)"
 echo "Host: $(hostname) | Ngay: $(date)"
@@ -24,7 +34,7 @@ echo "Node tinh toan: $SLURM_NODELIST"
 echo "Tong so task MPI: $SLURM_NTASKS"
 echo "=========================================================="
 
-# Chay benchmark Strassen MPI & Strassen Hybrid
+# 2. Chay benchmark Strassen MPI & Strassen Hybrid
 ./scripts/run_cluster.sh --only strassen_mpi,strassen_hybrid
 
 echo "=========================================================="

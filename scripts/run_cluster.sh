@@ -10,7 +10,7 @@
 # =============================================================================
 set -uo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}") /.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT" || exit 1
 
 ulimit -n 4096 2>/dev/null || true

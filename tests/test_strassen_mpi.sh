@@ -6,7 +6,7 @@
 # Yeu cau: bin/strassen_mpi va bin/strassen_hybrid phai ton tai.
 set -uo pipefail
 
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}") /.." && pwd)"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT" || exit 1
 
 # Tang gioi han mo file tren cluster va bat MCA de OpenMPI tu dong nang gioi han
