@@ -4,36 +4,37 @@
 
 ---
 
-## 1. THÔNG SỐ KHẢO SÁT HỆ THỐNG CLUSTER (Nhiệm vụ D1)
+## 1. THÔNG SỐ KHẢO SÁT HỆ THỐNG CLUSTER (Nhiệm vụ D1 - Đã hoàn thành khảo sát)
 
-*Điền các thông số thực tế của cluster vào bảng này sau khi SSH vào node master:*
+*Thông số khảo sát thực tế trên cụm SuperNodeXP (HPCC ĐHBK TP.HCM) ngày 09/11/2026 bởi Tô Thế Hưng (s2211384):*
 
-| Hạng mục | Chi tiết thực tế khảo sát | Lệnh kiểm tra |
+| Hạng mục | Chi tiết thực tế khảo sát | Ý nghĩa / Ghi chú cho nhóm |
 | :--- | :--- | :--- |
-| **Số lượng Node** | *(Ví dụ: 4 nodes: node01..node04)* | `sinfo` hoặc xem hostfile |
-| **CPU mỗi node** | *(Ví dụ: Intel Xeon E5-2680 v4 @ 2.40GHz)* | `lscpu \| grep "Model name"` |
-| **Số Core vật lý/Logic** | *(Ví dụ: 14 cores vật lý / 28 threads)* | `lscpu \| grep -E "Socket\|Core\|Thread"` |
-| **Dung lượng RAM** | *(Ví dụ: 64 GB DDR4)* | `free -h` |
-| **Hệ điều hành (OS)** | *(Ví dụ: Ubuntu 22.04 LTS / CentOS 7)* | `cat /etc/os-release` |
-| **Trình biên dịch C++** | *(Ví dụ: GCC 11.4.0 hoặc GCC 12)* | `g++ --version` |
-| **Phiên bản MPI** | *(Ví dụ: OpenMPI 4.1.2 / MPICH 4.0)* | `mpicxx --version` & `mpirun --version` |
-| **Thư viện BLAS** | *(Có sẵn OpenBLAS / Intel MKL không)* | `ldconfig -p \| grep blas` |
-| **Kiến trúc đồng nhất** | Các node có cùng CPU/RAM hay không? | So sánh `lscpu` giữa các node |
+| **Số lượng Node** | **21 compute nodes** (`node[1-4,6-7,11-23,25]`, `node9`) | Quản lý bởi Slurm (`partition: compute`, `highmem`) |
+| **CPU mỗi node** | **Dual Socket: 2 × Intel(R) Xeon(R) CPU E5-2630L v4 @ 1.80GHz** | Hỗ trợ tập lệnh AVX2, FMA, SSE4.2 (rất mạnh cho SIMD) |
+| **Số Core / Threads** | **20 cores vật lý / 40 threads** (10 cores/socket, 2 sockets, HT=2) | Có 2 vùng NUMA (NUMA0: 0-9, 20-29; NUMA1: 10-19, 30-39) |
+| **Bộ nhớ Cache** | L1: 640KB, L2: 5MB, **L3: 50MB** | Cache L3 rất lớn, tối ưu hóa mạnh cho thuật toán block/Strassen |
+| **Dung lượng RAM** | **125 GiB** (trống khả dụng ~87 GiB) | Dư sức chạy ma trận $n = 10.000$ (chỉ tốn ~2.4 GB RAM) |
+| **Hệ điều hành (OS)** | **Red Hat Enterprise Linux / Rocky Linux** (Kernel x86_64) | Chuẩn cho tính toán khoa học |
+| **Trình biên dịch C++** | **GCC 11.5.0** (`gcc (GCC) 11.5.0 20240719 (Red Hat 11.5.0-14)`) | Hỗ trợ C++17 và OpenMP 4.5/5.0 đầy đủ |
+| **Phiên bản MPI** | **OpenMPI 5.0** (`openmpi/5.0`) & Intel MPI 2021 | Nạp qua lệnh: `module load openmpi/5.0` |
+| **Thư viện BLAS** | **Intel OneAPI MKL 2026** (`intel-oneapi-mkl/2026`) | Thư viện BLAS chuẩn công nghiệp nhanh nhất cho CPU Intel |
 
 ---
 
-## 2. QUY TRÌNH ĐĂNG NHẬP VÀ CHUẨN BỊ MÔI TRƯỜNG
+## 2. QUY TRÌNH NẠP MÔI TRƯỜNG & CHUẨN BỊ (BẮT BUỘC)
 
-### 2.1. Đăng nhập SSH
+Trên cụm SuperNodeXP, các công cụ được quản lý qua hệ thống **Lmod (Environment Modules)**. Để sử dụng `mpicxx` và `mpirun`, mỗi khi mở terminal mới **bắt buộc phải chạy**:
+
 ```bash
-ssh <username>@<cluster_ip_or_domain>
+module load openmpi/5.0
 ```
+*(Nếu làm việc với BLAS của TV1, nạp thêm: `module load intel-oneapi-mkl/2026`)*.
 
-### 2.2. Kiểm tra hoặc nạp Modules (nếu cluster dùng Environment Modules / Lmod)
+Kiểm tra sau khi load:
 ```bash
-module avail               # Xem các module có sẵn
-module load gcc/11.2.0     # Nạp GCC mới nếu mặc định quá cũ
-module load openmpi        # Nạp OpenMPI
+which mpicxx
+mpicxx --version
 ```
 
 ### 2.3. Tạo và kiểm tra file danh sách các Node (`hostfile` / `hosts`)
@@ -116,3 +117,4 @@ HOSTFILE=~/mpi_hosts scripts/run_cluster.sh --only strassen_mpi,strassen_hybrid
 *Kết quả đo được tự động ghi vào:*
 * File dữ liệu: `results/cluster/<hostname>_<YYYYMMDD>.csv`
 * File log chi tiết: `results/cluster/logs/<hostname>_<YYYYMMDD>.log`
+
