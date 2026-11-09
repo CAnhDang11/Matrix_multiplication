@@ -9,6 +9,11 @@ set -uo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}") /.." && pwd)"
 cd "$ROOT" || exit 1
 
+# Tang gioi han mo file tren cluster va bat MCA de OpenMPI tu dong nang gioi han
+ulimit -n 4096 2>/dev/null || true
+export OMPI_MCA_opal_set_max_sys_limits=1
+export PRTE_MCA_prte_set_max_sys_limits=1
+
 MPIRUN="${MPIRUN:-mpirun}"
 CUTOFF="${CUTOFF:-32}"
 PASS=0
