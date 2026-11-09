@@ -1,17 +1,34 @@
 ===== System Information =====
-Host: Laptop-3 (Intel Core Client Node)
-Date: Mon Nov 09 19:22:00 +07 2026
-OS: Windows 11 Pro 64-bit (Build 10.0.26100)
+Host: Laptop-3 (Client Node — TV3)
+Date: Mon Nov 09 19:46:00 +07 2026
+OS: Windows 11 64-bit
 Architecture: x86_64 / AMD64
-CPU Model: Intel Core (Intel64 Family 6 Model 151 Stepping 2, GenuineIntel)
-Physical Cores: 12 Cores
-Logical CPUs: 12 Threads
-Memory (RAM): ~16.0 GiB (17,179,869,184 bytes)
-Storage: NVMe PCIe SSD
 
-===== Compilers & Environment =====
-C/C++ Compiler: MinGW-w64 GCC 13+ / MSYS2 (x86_64-w64-mingw32)
+CPU Details:
+  Processor: 12th Gen Intel(R) Core(TM) i5-12450HX
+  Architecture: Intel Alder Lake (Hybrid x86 Architecture)
+  Base Frequency: 2.40 GHz (Max Turbo up to 4.40 GHz)
+  Sockets: 1
+  Physical Cores: 8 (4 Performance-cores + 4 Efficient-cores)
+  Logical Processors: 12 Threads (Hyper-Threading on P-cores)
+  L1 Cache: 704 KB
+  L2 Cache: 7.0 MB
+  L3 Cache: 12.0 MB
+
+Memory (RAM):
+  Total System Memory: 12.0 GiB (11.7 GiB Available to OS)
+  Type: High-speed DDR4 / DDR5
+
+Storage:
+  Disk 0 (C:, E:): NVMe PCIe SSD
+  Disk 1 (D:): NVMe PCIe SSD
+
+Graphics Processing Units (GPU):
+  GPU 0 (Integrated): Intel(R) UHD Graphics
+  GPU 1 (Discrete): NVIDIA GeForce RTX Laptop GPU
+
+===== Compilers & Toolchain =====
+C/C++ Compiler: MinGW-w64 GCC / MSYS2 (x86_64-w64-mingw32)
 OpenMP Support: OpenMP 4.5 / 5.0
 Python: Python 3.13.7
 Role: Shared-Memory Baseline Benchmark Node (Laptop 3)
-
