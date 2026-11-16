@@ -14,6 +14,12 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT" || exit 1
 
 # ---------------------------------------------------------------------------
+# Git commit hash (dung lam cot "commit" trong CSV)
+# ---------------------------------------------------------------------------
+GIT_COMMIT="$(git describe --tags --always 2>/dev/null || git rev-parse --short HEAD 2>/dev/null || echo "unknown")"
+export GIT_COMMIT
+
+# ---------------------------------------------------------------------------
 # Tro giup
 # ---------------------------------------------------------------------------
 usage() {

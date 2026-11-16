@@ -15,10 +15,9 @@ module load openmpi/5.0
 
 mkdir -p bin results/cluster/logs
 
-# 1. Cap nhat run_cluster.sh ban da fix loi cd len cluster
-curl -sSL https://raw.githubusercontent.com/CAnhDang11/Matrix_multiplication/main/scripts/run_cluster.sh -o scripts/run_cluster.sh
-sed -i 's/\r$//' scripts/*.sh tests/*.sh 2>/dev/null || true
-chmod +x scripts/*.sh tests/*.sh 2>/dev/null || true
+# 1. Dam bao script co quyen thuc thi
+sed -i 's/\r$//' scripts/*.sh 2>/dev/null || true
+chmod +x scripts/*.sh 2>/dev/null || true
 
 # 2. Bien dich sach se tren node duoc cap phat
 echo "=== BIEN DICH TREN $(hostname) ==="
