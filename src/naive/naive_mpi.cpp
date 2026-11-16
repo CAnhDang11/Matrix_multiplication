@@ -19,9 +19,16 @@ real_t* alloc_aligned(std::size_t count) {
     }
 
     void* ptr = nullptr;
+#if defined(_WIN32)
+    ptr = std::malloc(count * sizeof(real_t));
+    if (ptr == nullptr) {
+        return nullptr;
+    }
+#else
     if (posix_memalign(&ptr, 64, count * sizeof(real_t)) != 0) {
         return nullptr;
     }
+#endif
     return static_cast<real_t*>(ptr);
 }
 
